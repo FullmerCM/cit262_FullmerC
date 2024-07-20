@@ -50,11 +50,12 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |-
-        docker build .\bb\node-bulletin-board\bulletin-board-app\
+        docker build \
           --tag "fullmercm/cit262-fullmercm-bb:1.0" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
+      working-directory: .\bb\node-bulletin-board\bulletin-board-app
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-

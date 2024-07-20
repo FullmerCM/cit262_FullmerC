@@ -36,4 +36,3 @@ jobs:
             - name: Run tests with coverage
               run: npm test -- --coverage
               working-directory: ./NodeJSExample  # Ensure the tests are run from the correct directory
-                
