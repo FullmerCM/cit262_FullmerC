@@ -18,5 +18,5 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
       - name: Run tests with coverage
-              run: npm test -- --coverage
-              working-directory: ./bb/node-bulletin-board/bulletin-board-app/backend  # Ensure the tests are run from the correct directory
+        run: npm test -- --coverage
+        working-directory: ./bb/node-bulletin-board/bulletin-board-app/backend  # Ensure the tests are run from the correct directory
