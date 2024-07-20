@@ -55,7 +55,7 @@ jobs:
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
-      working-directory: .\bb\node-bulletin-board\bulletin-board-app
+      working-directory: bb/node-bulletin-board/bulletin-board-app
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
