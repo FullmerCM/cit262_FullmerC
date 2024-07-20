@@ -17,3 +17,11 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
                 
+      - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+               node-version: '14'
+
+      - name: Run tests with coverage
+              run: npm test -- --coverage
+              working-directory: ./bb/node-bulletin-board/bulletin-board-app/backend  # Ensure the tests are run from the correct directory

@@ -10,80 +10,36 @@ AWS.config.update({region: 'us-east-1'});
 let dynamodb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
 var params = {
-  AttributeDefinitions: [
-    {
-      AttributeName: "id",
-      AttributeType: "S",
-    },
-    {
-      AttributeName: "title",
-      AttributeType: "S",
-    },
-    {
-      AttributeName: "detail",
-      AttributeType: "S",
-    },
-    {
-      AttributeName: "date",
-      AttributeType: "S",
-    },
-  ],
-  KeySchema: [
-    {
-      AttributeName: "id",
-      KeyType: "HASH",
-    },
-  ],
-  ProvisionedThroughput: {
-    ReadCapacityUnits: 5,
-    WriteCapacityUnits: 5,
+  TableName: "TABLE",
+  Item: {
+    CUSTOMER_ID: { N: "001" },
+    CUSTOMER_NAME: { S: "Richard Roe" },
   },
-  TableName: "Events",
-  StreamSpecification: {
-    StreamEnabled: false,
+  Key: {
+    KEY_NAME: { N: "001" },
   },
+  ProjectionExpression: "ATTRIBUTE_NAME",
 };
 
-ddb.createTable(params, function (err, data) {
-  if (err) {
-    console.log("Error", err);
-  } else {
-    console.log("Table Created", data);
-  }
-});
+var events = require('./events.js');
 
 exports.events = function (req, res) {
-  if (req.method === 'GET') {
-    const params = {
-      TableName: 'Events'
-    };
-
-    dynamodb.scan(params, function (err, data) {
+  // Call DynamoDB to read the item from the table
+    dynamodb.getItem(params, function (err, data) {
       if (err) {
-        console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
-        res.status(500).send(err);
+        console.log("Error", err);
       } else {
-        res.json(data.Items);
+        console.log("Success", data.Item);
       }
     });
-  } 
 };
 
 exports.event = function (req, res) {
-  const eventId = req.params.eventId;
-  const params = {
-    TableName: 'Events',
-    Key: {
-      'id': eventId
-    }
-  };
-
-  dynamodb.get(params, function (err, data) {
-    if (err) {
-      console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
-      res.status(500).send(err);
-    } else {
-      res.json(data.Item);
-    }
-  });
+  ddb.putItem(params, function (err, data) {
+  if (err) {
+    console.log("Error", err);
+  } else {
+    console.log("Success", data);
+  }
+});
 };
