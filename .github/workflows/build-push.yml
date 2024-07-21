@@ -60,10 +60,6 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
       working-directory: bb/node-bulletin-board/bulletin-board-app
-    # Push the Docker image to Google Container Registry
-    - name: Publish
-      run: |-
-        docker push "fullmercm/cit262-fullmercm-bb:latest"
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
