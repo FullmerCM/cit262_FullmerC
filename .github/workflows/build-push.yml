@@ -58,7 +58,7 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
-        docker push "fullmercm/cit262-fullmercm-bb:latest"
+        docker push "hub.docker.com/repository/docker/fullmercm/cit262-fullmercm-bb:latest"
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
